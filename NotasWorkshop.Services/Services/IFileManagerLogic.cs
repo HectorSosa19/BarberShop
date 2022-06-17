@@ -1,4 +1,5 @@
-﻿using NotasWorkshop.Model.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using NotasWorkshop.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace NotasWorkshop.Services.Services
 {
     public interface IFileManagerLogic
     {
-        Task<string> Upload(BarberWork model);
-        Task<byte[]> Read(string fileName);
+        public Task<string> Upload(IFormFile model);
     }
 }

@@ -12,12 +12,10 @@ namespace NotasWorkshop.Model.Entities
     {
         public string Name { get; set; }
         public string Photo { get; set; }
-        public DateTime Duration { get; set; }
+        public string Duration { get; set; }
         public int Price { get; set; }
         public string Description { get; set; }
         public ICollection<Appointment> Appointments { get; set; } 
-        public int IdInvoices { get; set; }
-        [ForeignKey("IdInvoices")]
         public Invoice Invoices { get; set; }
     }
 }

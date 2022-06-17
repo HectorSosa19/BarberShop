@@ -15,7 +15,7 @@ namespace NotasWorkshop.Model.Entities
         public int Experience { get; set; }
         public int SeatNum { get; set; }
         public bool IsAvailable { get; set; }
-        public IFormFile Photo { get; set; }
+        public IFormFile ImageFile { get; set; }
         public int IdUser { get; set; }
     }
 }

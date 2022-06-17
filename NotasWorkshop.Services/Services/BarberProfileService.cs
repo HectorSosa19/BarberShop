@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NotasWorkshop.Model.Contexts.NotasWorkshop;
 using NotasWorkshop.Model.Entities;
+using NotasWorkshop.Model.Repositories;
 using NotasWorkshop.Model.UnitOfWorks;
 using NotasWorkshop.Services.Generic;
 using System;
@@ -11,15 +12,31 @@ using System.Threading.Tasks;
 
 namespace NotasWorkshop.Services.Services
 {
-    public interface IBarberProfileService : IEntityCRUDService<BarberProfile, BarberProfileDto>
-    {
-
-    }
     public class BarberProfileService : EntityCRUDService<BarberProfile, BarberProfileDto>, IBarberProfileService
     {
-        public BarberProfileService(IMapper mapper, IUnitOfWork<INotasWorkshopDbContext> uow) : base(mapper, uow)
+        private readonly IBarberProfileRepository _barberprofileRepository;
+        public BarberProfileService(IMapper mapper,
+            IUnitOfWork<INotasWorkshopDbContext> uow,
+            IBarberProfileRepository barberprofileRepository) : base(mapper, uow)
         {
+            _barberprofileRepository = barberprofileRepository;
+        }
+        public BarberProfile CreateBarber(BarberProfile barber)
+        {
+            _barberprofileRepository.CreateBarber(barber);
+            return barber;
+        }
 
+        public BarberProfile DeleteBarber(BarberProfile barber)
+        {
+            _barberprofileRepository.DeleteBarber(barber);
+            return barber;
+        }
+        public List<BarberProfile> GetAllBarbers()
+        {
+            var barbers = _barberprofileRepository.GetAllBarbers();
+
+            return barbers;
         }
     }
 }

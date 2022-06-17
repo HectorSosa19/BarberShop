@@ -10,6 +10,10 @@ namespace NotasWorkshop.API.IoC
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBarberProfileRepository,BarberProfileRepository>();
+            services.AddScoped<IBarberProfileService,BarberProfileService>();
+            services.AddScoped<ITypeHairCutService, TypeHairCutService>();
+            services.AddScoped<ITypeHairCutRepository, TypeHairCutRepository>();
         }
 
         public static void GetConfigurationSections(this IServiceCollection services, IConfiguration configuration)

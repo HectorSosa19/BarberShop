@@ -17,7 +17,7 @@ namespace NotasWorkshop.Model.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
@@ -81,8 +81,7 @@ namespace NotasWorkshop.Model.Migrations
                         name: "FK_Invoices_TypeHairCuts_IdTypeHairCut",
                         column: x => x.IdTypeHairCut,
                         principalTable: "TypeHairCuts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -94,6 +93,7 @@ namespace NotasWorkshop.Model.Migrations
                     Experience = table.Column<int>(type: "int", nullable: false),
                     SeatNum = table.Column<int>(type: "int", nullable: false),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    ImageFile = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdUser = table.Column<int>(type: "int", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -201,7 +201,8 @@ namespace NotasWorkshop.Model.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_IdTypeHairCut",
                 table: "Invoices",
-                column: "IdTypeHairCut");
+                column: "IdTypeHairCut",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_IdBarberProfile",

@@ -159,11 +159,3 @@ C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API
 C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Scrutor.dll
 C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Azure.Identity.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Azure.Storage.Queues.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Azure.WebJobs.Host.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Azure.WebJobs.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Azure.WebJobs.Extensions.Storage.Queues.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Extensions.Azure.dll
-C:\Users\hecto\OneDrive\Escritorio\AspBarberShop\OnionApiNotas\NotasWorkshop.API\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll

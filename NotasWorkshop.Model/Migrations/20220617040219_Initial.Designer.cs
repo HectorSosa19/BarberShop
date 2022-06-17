@@ -12,7 +12,7 @@ using NotasWorkshop.Model.Contexts.NotasWorkshop;
 namespace NotasWorkshop.Model.Migrations
 {
     [DbContext(typeof(NotasWorkshopDbContext))]
-    [Migration("20220614174739_Initial")]
+    [Migration("20220617040219_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,10 @@ namespace NotasWorkshop.Model.Migrations
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageFile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
 
@@ -154,7 +158,8 @@ namespace NotasWorkshop.Model.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdTypeHairCut");
+                    b.HasIndex("IdTypeHairCut")
+                        .IsUnique();
 
                     b.ToTable("Invoices");
                 });
@@ -220,8 +225,9 @@ namespace NotasWorkshop.Model.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Duration")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -353,9 +359,9 @@ namespace NotasWorkshop.Model.Migrations
             modelBuilder.Entity("NotasWorkshop.Model.Entities.Invoice", b =>
                 {
                     b.HasOne("NotasWorkshop.Model.Entities.TypeHairCut", "TypeHairCuts")
-                        .WithMany("Invoices")
-                        .HasForeignKey("IdTypeHairCut")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("Invoices")
+                        .HasForeignKey("NotasWorkshop.Model.Entities.Invoice", "IdTypeHairCut")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("TypeHairCuts");
@@ -383,7 +389,8 @@ namespace NotasWorkshop.Model.Migrations
                 {
                     b.Navigation("Appointments");
 
-                    b.Navigation("Invoices");
+                    b.Navigation("Invoices")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("NotasWorkshop.Model.Entities.User", b =>

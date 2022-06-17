@@ -1,4 +1,6 @@
 ﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Http;
 using NotasWorkshop.Model.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,31 +12,25 @@ namespace NotasWorkshop.Services.Services
 {
     public class FileManagerLogic : IFileManagerLogic
     {
-        private readonly BlobServiceClient _blobServiceClient;
-        public FileManagerLogic(BlobServiceClient blobServiceClient)
+        protected BlobServiceClient blobClient;
+        protected BlobClient _client;
+        protected BlobContainerClient containerClient;
+        public FileManagerLogic()
         {
-            _blobServiceClient = blobServiceClient;
+            blobClient = new BlobServiceClient(StorageAccount.connection);
         }
-        public async Task<string> Upload(BarberWork model)
+
+        public async Task<string> Upload(IFormFile model)
         {
-            var blobContainer = _blobServiceClient.GetBlobContainerClient("images");
-
-            var blobClient = blobContainer.GetBlobClient(model.ImageFile.FileName);
-
-            await blobClient.UploadAsync(model.ImageFile.OpenReadStream());
-
-            return blobClient.Uri.ToString();
-        }
-        public async Task<byte[]>Read(string fileName)
-        {
-            var blobContainer = _blobServiceClient.GetBlobContainerClient("images");
-            var blobClient = blobContainer.GetBlobClient(fileName);
-            var imgDownloaded = await blobClient.DownloadAsync();
-            using(MemoryStream ms = new MemoryStream())
+            string fileName = $"{Guid.NewGuid().ToString()}-{model.FileName}";
+            containerClient = blobClient.GetBlobContainerClient("images");
+            _client = containerClient.GetBlobClient(fileName);
+            using (var fileStream = await _client.OpenWriteAsync(true, new BlobOpenWriteOptions()))
             {
-                imgDownloaded.Value.Content.CopyToAsync(ms);
-                return ms.ToArray();
+                await model.CopyToAsync(fileStream);
+                fileStream.Close();
             }
+            return _client.Uri.ToString();
         }
     }
 }

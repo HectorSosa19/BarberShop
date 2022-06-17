@@ -95,7 +95,12 @@ namespace NotasWorkshop.Model.Contexts
             .HasOne(b => b.User)
             .WithOne(p => p.BarberProfiles)
             .OnDelete(DeleteBehavior.ClientCascade);
-            
+
+            modelBuilder.Entity<Invoice>()
+            .HasOne(b => b.TypeHairCuts)
+            .WithOne(p => p.Invoices)
+            .OnDelete(DeleteBehavior.ClientCascade);
+
             foreach (var type in modelBuilder.Model.GetEntityTypes())
             {
                 //if (typeof(IBaseEntity).IsAssignableFrom(type.ClrType))
