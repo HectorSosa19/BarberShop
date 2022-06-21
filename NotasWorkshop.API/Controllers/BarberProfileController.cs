@@ -47,7 +47,7 @@ namespace NotasWorkshop.API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<BarberProfile>>> AddBarbers([FromForm] BarberProfileDto request)
         {
-            
+            barber.Id = request.Id.Value;
             barber.SeatNum = request.SeatNum;
             barber.ImageFile = await _imageService.Upload(request.ImageFile);
             barber.Experience = request.Experience;
@@ -72,7 +72,6 @@ namespace NotasWorkshop.API.Controllers
             var barber = await Context.BarberProfiles.FindAsync(request.Id);
             if (barber == null)
                 return BadRequest("Barber not found.");
-
             barber.SeatNum = request.SeatNum;
             barber.ImageFile = await _imageService.Upload(request.ImageFile);
             barber.Experience = request.Experience;

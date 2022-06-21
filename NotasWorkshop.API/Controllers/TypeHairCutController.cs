@@ -46,9 +46,10 @@ namespace NotasWorkshop.API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<TypeHairCut>>> AddHaircuts([FromForm] TypeHairCutDto request)
         {
-
+            typehaircut.Id = request.Id.Value;
             typehaircut.Name = request.Name;
             typehaircut.Photo = await _imageService.Upload(request.Photo);
+            typehaircut.Duration = request.Duration;
             typehaircut.Price = request.Price;
             typehaircut.Description = request.Description;
 
@@ -71,8 +72,10 @@ namespace NotasWorkshop.API.Controllers
             if (haircut == null)
                 return BadRequest("Haircut not found.");
 
+            typehaircut.Id = request.Id.Value;
             typehaircut.Name = request.Name;
             typehaircut.Photo = await _imageService.Upload(request.Photo);
+            typehaircut.Duration = request.Duration;
             typehaircut.Price = request.Price;
             typehaircut.Description = request.Description;
 

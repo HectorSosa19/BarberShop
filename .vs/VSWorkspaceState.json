@@ -1,8 +1,6 @@
 {
   "ExpandedNodes": [
     "",
-    "\\NotasWorkshop.API",
-    "\\NotasWorkshop.API\\Controllers",
     "\\NotasWorkshop.Core",
     "\\NotasWorkshop.Core\\Base",
     "\\NotasWorkshop.Core\\Base\\BaseDto",
@@ -13,6 +11,6 @@
     "\\NotasWorkshop.Services\\Generic",
     "\\NotasWorkshop.Services\\Services"
   ],
-  "SelectedNode": "\\NotasWorkshop.API\\Controllers\\AuthController.cs",
+  "SelectedNode": "\\NotasWorkshop.Model\\Entities\\Invoice.cs",
   "PreviewInSolutionExplorer": false
 }

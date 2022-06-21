@@ -23,7 +23,7 @@ namespace NotasWorkshop.API.Controllers
         private readonly IUserService _service;
         private readonly IHttpContextAccessor _accessor;
 
-        public AuthController(IConfiguration configuration, NotasWorkshopDbContext context, IUserService service , IHttpContextAccessor accessor )
+        public AuthController(IConfiguration configuration, NotasWorkshopDbContext context, IUserService service, IHttpContextAccessor accessor)
         {
             _configuration = configuration;
             _service = service;
@@ -31,9 +31,10 @@ namespace NotasWorkshop.API.Controllers
             Context = context;
         }
         [HttpPost("RegisterUser")]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        public async Task<ActionResult<User>> RegisterUser(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] PasswordHash, out byte[] PasswordSalt);
+            user.Id = request.Id.Value;
             user.Name = request.Name;
             user.LastName = request.LastName;
             user.Email = request.Email;
@@ -41,7 +42,6 @@ namespace NotasWorkshop.API.Controllers
             user.Password = request.Password;
             user.Phone = request.Phone;
             user.Gender = request.Gender;
-            user.UserRoles = request.UserRoles;
             user.PasswordHash = PasswordSalt;
             user.PasswordSalt = PasswordHash;
             PostUser(user);
@@ -53,6 +53,22 @@ namespace NotasWorkshop.API.Controllers
             var userFromService = _service.CreateUser(user);
             return userFromService;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> Get()
+        {
+            return Ok(await Context.Users.ToListAsync());
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> Get(int Id)
+        {
+            var user = await Context.Users.FindAsync(Id);
+            if (user == null)
+                return BadRequest("User not found");
+            return Ok(user);
+        }
+
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(LoginDto request)
         {
@@ -67,10 +83,10 @@ namespace NotasWorkshop.API.Controllers
 
             return Ok(token);
         }
-        [HttpPut("UpdateUser")]
-        public async Task<ActionResult<List<User>>> UpdateUsers(UserDto request)
+        [HttpPut("{id}"),Authorize(Roles="Admin")]
+        public async Task<ActionResult<List<User>>> UpdateUsers(int id, [FromForm] UserDto request)
         {
-            var user = await Context.Users.FindAsync(request.Id);
+            var user = await Context.Users.FindAsync(id);
             if (user == null)
                 return BadRequest("User not found.");
             CreatePasswordHash(request.Password, out byte[] PasswordHash, out byte[] PasswordSalt);
@@ -87,7 +103,7 @@ namespace NotasWorkshop.API.Controllers
             await Context.SaveChangesAsync();
             return Ok(await Context.Users.ToListAsync());
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"),Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
             var user = await Context.Users.FindAsync(id);
@@ -97,6 +113,24 @@ namespace NotasWorkshop.API.Controllers
             Context.Users.Remove(user);
             await Context.SaveChangesAsync();
             return Ok(await Context.Users.ToListAsync());
+        }
+        [HttpPost("AddRolesWithAdmin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<User>> Register(UserDto request)
+        {
+            CreatePasswordHash(request.Password, out byte[] PasswordHash, out byte[] PasswordSalt);
+            user.Id = request.Id.Value;
+            user.Name = request.Name;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.Username = request.Username;
+            user.Password = request.Password;
+            user.Phone = request.Phone;
+            user.Gender = request.Gender;
+            user.UserRoles = request.UserRoles;
+            user.PasswordHash = PasswordSalt;
+            user.PasswordSalt = PasswordHash;
+            PostUser(user);
+            return Ok(user);
         }
         private string CreateToken(User user)
         {
@@ -132,6 +166,5 @@ namespace NotasWorkshop.API.Controllers
                 return computeHash.SequenceEqual(PasswordHash);
             }
         }
-
     }
 }

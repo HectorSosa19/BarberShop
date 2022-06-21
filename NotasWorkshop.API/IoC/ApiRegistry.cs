@@ -14,8 +14,10 @@ namespace NotasWorkshop.API.IoC
             services.AddScoped<IBarberProfileService,BarberProfileService>();
             services.AddScoped<ITypeHairCutService, TypeHairCutService>();
             services.AddScoped<ITypeHairCutRepository, TypeHairCutRepository>();
+            services.AddScoped<IAppointmentService,AppointmentService>();
+            services.AddScoped<IReviewService,ReviewService>();
+            services.AddScoped<IInvoiceService,InvoiceService>();
         }
-
         public static void GetConfigurationSections(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
